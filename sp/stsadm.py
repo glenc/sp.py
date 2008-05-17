@@ -25,7 +25,7 @@ def run(operation, **args):
 	_execute_command(argstring)
 
 
-def _format_args(**args):
+def _format_args(args):
 	"""Formats a series of arguments as an STSADM argument string"""
 	argstring = ""
 	for kw in args.keys():
@@ -38,7 +38,7 @@ def _format_args(**args):
 	return argstring
 
 
-def _execute_command(argstring, workingDir=None):
+def _execute_command(argstring, workingdir=None):
 	"""Executs an STSADM command"""
 	proc = Process()
 	
