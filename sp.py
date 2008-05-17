@@ -1,7 +1,13 @@
-# Helper Functions
+# Set up References
+import clr
+clr.AddReference("System")
+clr.AddReference("Microsoft.SharePoint")
+from System import Uri
+from Microsoft.SharePoint import *
+from Microsoft.SharePoint.Administration import SPWebApplication
+
 
 # Enumeration
-#
 # These are simple enumeration methods for walking over various SharePoint
 # objects and collections.
 
