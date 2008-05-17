@@ -1,0 +1,2 @@
+sp.py is a small Python library for working with Microsoft Office SharePoint
+Server 2007.  sp.py requires IronPython.
