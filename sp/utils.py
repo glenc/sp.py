@@ -57,3 +57,4 @@ def get_web(url):
 		return url.RootWeb
 	
 	return SPSite(url).OpenWeb(url)
+
