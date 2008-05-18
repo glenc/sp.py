@@ -7,12 +7,43 @@
 # site collection applying the theme to that web
 
 import sp
+import getopt
+
+__all__ = ["apply_theme"]
+
+def main(argv):
+	try:
+		opts, args = getopt.getopt(argv, "u:t:f", ["url=", "theme=", "force"])
+	except getopt.GetoptError:
+		print HELPSTRING
+		sys.exit(2)
+	
+	# defaults
+	force = False
+	url = "http://localhost"
+	theme = "none"
+	
+	for o,a in opts:
+		if o in ("-u", "--url"):
+			url = a
+		elif o in ("-t", "--theme"):
+			theme = a
+		elif o in ("-f", "--force"):
+			force = True
+	
+	apply_theme(url, theme, force)
+
 
 def apply_theme(url, theme, force=False):
 	"""Applies the theme to all webs within the web application"""
 	
+	# always compare to lower case
+	theme = theme.lower()
+	
 	def do_work(web):
-		if web.Theme != theme or force == True:
+		# make sure we're comparing to lower case
+		wtheme = web.Theme.lower()
+		if (theme == "none" and wtheme != "") or (theme != "none" and wtheme != theme) or force == True:
 			print "Applying theme to", web.Url
 			web.ApplyTheme(theme)
 	
@@ -25,12 +56,7 @@ def apply_theme(url, theme, force=False):
 
 if __name__ == '__main__':
 	import sys
-
-	if len(sys.argv) == 1:
-		print HELPSTRING
-	else:
-		apply_theme(sys.argv[1], sys.argv[2], False)
-
+	main(sys.argv[1:])
 
 
 HELPSTRING = """
