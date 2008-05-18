@@ -1,22 +1,30 @@
 # applytheme.py
-# 
-# This script will apply the specified theme to all
-# webs in the specified web application.  It will
-# iterate through each site collection in the web
-# application, then iterate through each web in the
-# site collection applying the theme to that web
+"""
+Apply Theme
+This script will apply the specified theme to all webs in the
+specified web application.
 
-import sp
-import getopt
+Usage:
+
+	ipy applytheme.py --url http://myserver --theme Petal
+
+Arguments:
+
+	--url      - web application url
+	--theme    - theme to apply
+	[--force]  - apply the theme even if it is already applied
+
+"""
+# 
 
 __all__ = ["apply_theme"]
 
 def main(argv):
+	import getopt
 	try:
-		opts, args = getopt.getopt(argv, "u:t:f", ["url=", "theme=", "force"])
+		opts, args = getopt.getopt(argv, "?u:t:f", ["url=", "theme=", "force", "help"])
 	except getopt.GetoptError:
-		print HELPSTRING
-		sys.exit(2)
+		showhelp()
 	
 	# defaults
 	force = False
@@ -30,12 +38,21 @@ def main(argv):
 			theme = a
 		elif o in ("-f", "--force"):
 			force = True
+		elif o in ("-?", "--help"):
+			showhelp()
 	
 	apply_theme(url, theme, force)
 
 
+def showhelp():
+	print __doc__
+	sys.exit()
+
+
 def apply_theme(url, theme, force=False):
 	"""Applies the theme to all webs within the web application"""
+	
+	import sp
 	
 	# always compare to lower case
 	theme = theme.lower()
@@ -58,19 +75,3 @@ if __name__ == '__main__':
 	import sys
 	main(sys.argv[1:])
 
-
-HELPSTRING = """
-Apply Theme
-This script will apply the specified theme to all webs in the
-specified web application.
-
-Usage:
-
-	ipy applytheme.py http://myserver Petal
-
-Arguments:
-
-	url   - web application url
-	theme - theme to apply
-
-"""
