@@ -56,7 +56,7 @@ This script will set a property on all user profiles based on the pattern provid
 
 Usage:
 
-	ipy setprofilepics.py http://myserver Picture http://myserver/pics/{Alias}.jpg
+	ipy setprofileprop.py http://myserver Picture http://myserver/pics/{Alias}.jpg
 
 Arguments:
 
