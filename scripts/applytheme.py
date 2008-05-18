@@ -13,6 +13,7 @@ Arguments:
 	--url      - web application url
 	--theme    - theme to apply
 	[--force]  - apply the theme even if it is already applied
+	[--help]   - display this message
 
 """
 # 
