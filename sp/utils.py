@@ -11,7 +11,7 @@ from Microsoft.SharePoint.Administration import SPWebApplication
 # These are simple enumeration methods for walking over various SharePoint
 # objects and collections.
 
-def _enum(col, fn):
+def enum(col, fn):
 	"""Enumerate a collection and call function fn for each item."""
 	for x in col:
 		fn(x)
@@ -24,7 +24,7 @@ def enum_sites(webapp, fn):
 	"""
 	# just in case we were passed a URL, get the web app
 	webapp = get_webapplication(webapp)
-	_enum(webapp.Sites, fn)
+	enum(webapp.Sites, fn)
 
 
 
@@ -57,4 +57,5 @@ def get_web(url):
 		return url.RootWeb
 	
 	return SPSite(url).OpenWeb(url)
+
 
