@@ -21,7 +21,7 @@ Arguments:
 __all__ = ["apply_theme"]
 
 def main(argv):
-	import getopt
+	from scriptutil import getopt
 	try:
 		opts, args = getopt.getopt(argv, "?u:t:f", ["url=", "theme=", "force", "help"])
 	except getopt.GetoptError:

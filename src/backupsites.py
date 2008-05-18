@@ -16,9 +16,9 @@ Arguments:
 
 """
 
-import getopt
 import sp
 from sp import stsadm
+from scriptutil import getopt
 
 __all__ = ["backup_sites", "backup_site"]
 

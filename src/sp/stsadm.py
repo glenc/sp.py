@@ -29,8 +29,9 @@ def _format_args(args):
 	"""Formats a series of arguments as an STSADM argument string"""
 	argstring = ""
 	for kw in args.keys():
-		if type(args[kw]) is bool and args[kw] == True:
-			argstring += "-" + kw
+		if type(args[kw]) is bool:
+			if args[kw] == True:
+				argstring += "-" + kw
 		else:
 			argstring += "-" + kw + " \"" + args[kw] + "\""
 		argstring += " "
