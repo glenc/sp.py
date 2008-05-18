@@ -27,9 +27,9 @@ USAGE
 	# Calling scripts in the scripts module
 	
 	> cd sp.py
-	> ipy scripts/backupsites.py http://myserver c:\backups
+	> ipy backupsites.py --url http://myserver --destination c:\backups --overwrite
 	>
-	> ipy scripts/setprofileprop.py http://myserver Picture http://myserver/pics/{Alias}.jpg
+	> ipy setprofileprop.py --url http://myserver --property Picture --value http://myserver/pics/{Alias}.jpg
 	>
 
 REQUIREMENTS
