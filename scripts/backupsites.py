@@ -4,6 +4,8 @@
 import sp
 from sp import stsadm
 
+__all__ = ["backup_sites", "backup_site"]
+
 FILE_EXTENSION = ".bak"
 
 def backup_sites(url, destination):

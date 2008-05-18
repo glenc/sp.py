@@ -5,15 +5,19 @@ import sp
 import re
 from sp import sharedservices
 
-def main(url, prop, value):
+__all__ = ["set_profile_prop"]
+
+def set_profile_prop(url, prop, value):
 	"""Executes the script"""
 	
 	# walk over all profiles and call apply_value
-	sharedservices.enum_profiles(url, lambda p: apply_value(p, prop, value))
+	sharedservices.enum_profiles(url, lambda p: _apply_value(p, prop, value))
 
 
-def apply_value(profile, prop, value):
+def _apply_value(profile, prop, value):
 	"""Applies the value to the profile provided"""
+	
+	print "Processing", profile["AccountName"]
 	
 	# take the value, locate any {key} patterns, then
 	# replace each with the property from the profile
@@ -46,7 +50,7 @@ if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		print HELPSTRING
 	else:
-		main(sys.argv[1], sys.argv[2], sys.argv[3])
+		set_profile_prop(sys.argv[1], sys.argv[2], sys.argv[3])
 
 
 
