@@ -27,6 +27,25 @@ def enum_sites(webapp, fn):
 	enum(webapp.Sites, fn)
 
 
+def enum_webs(site, fn):
+	"""
+	Enumerate all webs beneath the site or web specified
+	and call te specified function with each web.
+	"""
+	# do different things based on the type of object provided
+	if type(site) is SPWeb:
+		enum(site.Webs, fn)
+	else:
+		site = get_site(site)
+		enum(site.RootWeb.Webs, fn)
+
+
+def enum_all_webs(site, fn):
+	"""Enumerate all webs in a site collection"""
+	site = get_site(site)
+	enum(site.AllWebs, fn)
+
+
 
 # Get Object Helper Methods
 # These methods take in some sort of object identifier (usually a URL)
