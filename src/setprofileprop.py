@@ -18,42 +18,16 @@ Arguments:
 """
 
 import sp
-import re
 from sp import sharedservices
+import re
+import sys
+import scriptutil
 
 __all__ = ["set_profile_prop"]
 
 def main(argv):
-	from scriptutil import getopt
-	try:
-		opts, args = getopt.getopt(argv, "u:p:v:?", ["url=", "prop=", "value=", "help"])
-	except getopt.GetoptError:
-		showhelp()
-	
-	# defaults
-	url = ""
-	prop = ""
-	value = ""
-	
-	for o,a in opts:
-		if o in ("-u", "--url"):
-			url = a
-		elif o in ("-p", "--prop"):
-			prop = a
-		elif o in ("-v", "--value"):
-			value = a
-		elif o in ("-?", "--help"):
-			showhelp()
-	
-	if url == "" or prop == "":
-		showhelp()
-	
-	set_profile_prop(url, prop, value)
-
-
-def showhelp():
-	print __doc__
-	sys.exit()
+	args = scriptutil.getargs(argv, ["url=", "prop=", "value="], [], __doc__, True)
+	set_profile_prop(args["url"], args["prop"], args["value"])
 
 
 def set_profile_prop(url, prop, value):
@@ -94,5 +68,4 @@ def _apply_value(profile, prop, value):
 
 
 if __name__ == '__main__':
-	import sys
 	main(sys.argv[1:])

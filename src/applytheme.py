@@ -16,44 +16,21 @@ Arguments:
 	[--help]   - display this message
 
 """
-# 
+#
+
+import sys
+import sp
+import scriptutil
 
 __all__ = ["apply_theme"]
 
 def main(argv):
-	from scriptutil import getopt
-	try:
-		opts, args = getopt.getopt(argv, "?u:t:f", ["url=", "theme=", "force", "help"])
-	except getopt.GetoptError:
-		showhelp()
-	
-	# defaults
-	force = False
-	url = "http://localhost"
-	theme = "none"
-	
-	for o,a in opts:
-		if o in ("-u", "--url"):
-			url = a
-		elif o in ("-t", "--theme"):
-			theme = a
-		elif o in ("-f", "--force"):
-			force = True
-		elif o in ("-?", "--help"):
-			showhelp()
-	
-	apply_theme(url, theme, force)
-
-
-def showhelp():
-	print __doc__
-	sys.exit()
+	args = scriptutil.getargs(argv, ["url=", "theme="], ["force"], __doc__, True)
+	apply_theme(args["url"], args["theme"], args.has_key("force"))
 
 
 def apply_theme(url, theme, force=False):
 	"""Applies the theme to all webs within the web application"""
-	
-	import sp
 	
 	# always compare to lower case
 	theme = theme.lower()
@@ -73,6 +50,5 @@ def apply_theme(url, theme, force=False):
 
 
 if __name__ == '__main__':
-	import sys
 	main(sys.argv[1:])
 

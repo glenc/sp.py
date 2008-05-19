@@ -18,7 +18,8 @@ Arguments:
 
 import sp
 from sp import stsadm
-from scriptutil import getopt
+import scriptutil
+import sys
 
 __all__ = ["backup_sites", "backup_site"]
 
@@ -27,35 +28,8 @@ FILE_EXTENSION = ".bak"
 
 
 def main(argv):
-	try:
-		opts, args = getopt.getopt(argv, "u:d:o?", ["url=", "destination=", "overwrite", "help"])
-	except getopt.GetoptError:
-		showhelp()
-	
-	# defaults
-	overwrite = False
-	url = ""
-	destination = ""
-	
-	for o,a in opts:
-		if o in ("-u", "--url"):
-			url = a
-		elif o in ("-d", "--destination"):
-			destination = a
-		elif o in ("-o", "--overwrite"):
-			overwrite = True
-		elif o in ("-?", "--help"):
-			showhelp()
-	
-	if url == "" or destination == "":
-		showhelp()
-	
-	backup_sites(url, destination, overwrite)
-
-
-def showhelp():
-	print __doc__
-	sys.exit()
+	args = scriptutil.getargs(argv, ["url=", "destination="], ["overwrite"], __doc__, True)
+	backup_sites(args["url"], args["destination"], args.has_key("overwrite"))
 
 
 def backup_sites(url, destination, overwrite=True):
@@ -84,12 +58,11 @@ def backup_site(site, filename, overwrite=True):
 	"""Back up a site collection to the specified location"""
 	site = sp.get_site(site)
 	
-	print "Backing up site ", site.Url
+	print "Backing up site", site.Url
 	stsadm.run("backup", url=site.Url, filename=filename, overwrite=overwrite)
 
 
 
 if __name__ == '__main__':
-	import sys
 	main(sys.argv[1:])
 
