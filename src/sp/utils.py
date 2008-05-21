@@ -46,6 +46,12 @@ def enum_all_webs(site, fn):
 	enum(site.AllWebs, fn)
 
 
+def enum_lists(web, fn):
+	"""Enumerate all lists in the web specified"""
+	web = get_web(web)
+	enum(web.Lists, fn)
+
+
 
 # Get Object Helper Methods
 # These methods take in some sort of object identifier (usually a URL)
@@ -75,6 +81,50 @@ def get_web(url):
 	if type(url) is SPSite:
 		return url.RootWeb
 	
-	return SPSite(url).OpenWeb(url)
+	site = get_site(url)
+	relative_url = url.replace(site.Url, "")
+	
+	return site.OpenWeb(relative_url)
 
+
+def try_get_web(url):
+	"""Tries to get a web but returns false if no web was found"""
+	web = get_web(url)
+	if web.Exists:
+		return True, web
+	else:
+		return False, None
+
+
+def get_list(web, list_name):
+	"""Gets a list within a web"""
+	web = get_web(web)
+	return first(web.Lists, lambda l: l.Title == list_name)
+
+
+def try_get_list(web, list_name):
+	"""Tries to get a list but returns false if no list was found"""
+	l = get_list(web, list_name)
+	return l != None, l
+
+
+
+# Find Object Helper Methods
+# These methods are used to find objects in collections
+
+def collect(collection, fn):
+	"""Collects items where the function evalueates as true"""
+	results = []
+	for item in collection:
+		if fn(item):
+			results << item
+	return results
+
+
+def first(collection, fn):
+	"""Finds the first item in the collection where the function evaluates as true"""
+	for item in collection:
+		if fn(item):
+			return item
+	return None
 
