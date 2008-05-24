@@ -87,6 +87,21 @@ def get_web(url):
 	return site.OpenWeb(relative_url)
 
 
+def get_list(web, list_name):
+	"""Gets a list within a web"""
+	web = get_web(web)
+	return first(web.Lists, lambda l: l.Title == list_name)
+
+
+def try_get_site(url):
+	"""Tries to get a site collection but returns false if no site was found"""
+	try:
+		site = get_site(url)
+		return True, site
+	except:
+		return False, None
+
+
 def try_get_web(url):
 	"""Tries to get a web but returns false if no web was found"""
 	web = get_web(url)
@@ -94,12 +109,6 @@ def try_get_web(url):
 		return True, web
 	else:
 		return False, None
-
-
-def get_list(web, list_name):
-	"""Gets a list within a web"""
-	web = get_web(web)
-	return first(web.Lists, lambda l: l.Title == list_name)
 
 
 def try_get_list(web, list_name):
@@ -111,6 +120,15 @@ def try_get_list(web, list_name):
 
 # Find Object Helper Methods
 # These methods are used to find objects in collections
+
+def list_exists(web, list_name):
+	"""Checks if a list exists"""
+	web = get_web(web)
+	match = first(web.Lists, lambda l: l.Title == list_name)
+	return match != None
+
+
+# List/Collection helper methods
 
 def collect(collection, fn):
 	"""Collects items where the function evalueates as true"""
