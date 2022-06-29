@@ -1,38 +1,35 @@
-This library provides the ability to automate various
-SharePoint activities through easy to read and modify Python
-scripts.
+## Overview
+This library provides the ability to automate various SharePoint activities through easy to read and modify Python scripts.
 
-The core library is located in the sp module.  The scripts
-module contains a number of scripts for performing specific
-activities such as backing up sites.
+The core library is located in the sp module. The scripts module contains a number of scripts for performing specific activities such as backing up sites.
 
-USAGE
+## Usage
+```python
+# Working with the sp module.
 
-	# Working with the sp module.
-	
-	import sp
-	from sp import *
-	
-	# enumerate all sites and print out the url
-	sp.enum_sites("http://myserver", lambda s: print s.Url)
-	
-	# apply a master page to all webs
-	def apply_theme(web):
-		web.MasterUrl = "http://myserver/custom.master"
-		web.Update()
-	
-	sp.enum_all_webs("http://myserver", apply_theme)
-	
-	
-	# Calling scripts in the scripts module
-	
-	> cd sp.py
-	> ipy backupsites.py --url http://myserver --destination c:\backups --overwrite
-	>
-	> ipy setprofileprop.py --url http://myserver --property Picture --value http://myserver/pics/{Alias}.jpg
-	>
+import sp
+from sp import *
 
-REQUIREMENTS
+# enumerate all sites and print out the url
+sp.enum_sites("http://myserver", lambda s: print s.Url)
 
-This library is designed to work with Iron Python 1.1.1.  You
-can download Iron Python from http://www.codeplex.com/IronPython.
+# apply a master page to all webs
+def apply_theme(web):
+	web.MasterUrl = "http://myserver/custom.master"
+	web.Update()
+
+sp.enum_all_webs("http://myserver", apply_theme)
+```
+	
+	
+# Calling scripts in the scripts module
+
+> cd sp.py
+> ipy backupsites.py --url http://myserver --destination c:\backups --overwrite
+>
+> ipy setprofileprop.py --url http://myserver --property Picture --value http://myserver/pics/{Alias}.jpg
+>
+
+## Requirements
+
+This library is designed to work with Iron Python 1.1.1. You can download Iron Python from http://www.codeplex.com/IronPython.
